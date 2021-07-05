@@ -1,0 +1,303 @@
+{
+  "intents": [
+    {
+      "intent": "ترحيب",
+      "examples": [
+        {
+          "text": "السلام عليكم"
+        },
+        {
+          "text": "اهلا"
+        },
+        {
+          "text": "مرحبا"
+        },
+        {
+          "text": "هلو"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "حجوزات",
+      "examples": [
+        {
+          "text": "الاحد"
+        },
+        {
+          "text": "متوفر حجز"
+        },
+        {
+          "text": "هل عندكم حجوزات"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "sys-date",
+      "values": [],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-number",
+      "values": [],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-time",
+      "values": [],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "امراض",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "سرطان",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "كورونا",
+          "synonyms": [
+            "كرونا"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I didn't understand. You can try rephrasing."
+              },
+              {
+                "text": "Can you reword your statement? I'm not understanding."
+              },
+              {
+                "text": "I didn't get your meaning."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_6_1625104845601",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "اليوم مناسب"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_9_1625104956285",
+      "event_name": "focus",
+      "dialog_node": "handler_2_1625104956298",
+      "previous_sibling": "handler_4_1625104956298"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "الوقت  المناسب"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_9_1625105123935",
+      "event_name": "focus",
+      "dialog_node": "handler_2_1625105123935",
+      "previous_sibling": "handler_9_1625105123935"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_8_1625105165954",
+      "event_name": "focus",
+      "dialog_node": "handler_2_1625105165954",
+      "previous_sibling": "handler_9_1625105165954"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_9_1625104956285",
+      "context": {
+        "date": "@sys-date"
+      },
+      "conditions": "@sys-date",
+      "event_name": "input",
+      "dialog_node": "handler_4_1625104956298"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_9_1625105123935",
+      "context": {
+        "time": "@sys-time"
+      },
+      "conditions": "@sys-time",
+      "event_name": "input",
+      "dialog_node": "handler_9_1625105123935"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_8_1625105165954",
+      "context": {
+        "number": "@sys-number"
+      },
+      "conditions": "@sys-number",
+      "event_name": "input",
+      "dialog_node": "handler_9_1625105165954"
+    },
+    {
+      "type": "standard",
+      "dialog_node": "node_2_1625104774065",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "standard",
+      "title": "ترحيب",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "يلا هلا اسالني"
+              },
+              {
+                "text": "تفضل"
+              },
+              {
+                "text": "كيف اخدمك"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "conditions": "#ترحيب",
+      "dialog_node": "node_5_1625104144054",
+      "previous_sibling": "node_2_1625104774065"
+    },
+    {
+      "type": "frame",
+      "title": "حجوزات",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "تم الحجز"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#حجوزات",
+      "dialog_node": "node_6_1625104845601",
+      "previous_sibling": "node_5_1625104144054"
+    },
+    {
+      "type": "slot",
+      "parent": "node_6_1625104845601",
+      "variable": "$number",
+      "dialog_node": "slot_8_1625105165954",
+      "previous_sibling": "slot_9_1625105123935"
+    },
+    {
+      "type": "slot",
+      "parent": "node_6_1625104845601",
+      "variable": "$date",
+      "dialog_node": "slot_9_1625104956285"
+    },
+    {
+      "type": "slot",
+      "parent": "node_6_1625104845601",
+      "variable": "$time",
+      "dialog_node": "slot_9_1625105123935",
+      "previous_sibling": "slot_9_1625104956285"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hello. How can I help you?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "off_topic": {
+      "enabled": true
+    },
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above"
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "intent_classification": {
+      "training_backend_version": "v2"
+    },
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "name": "dialog",
+  "language": "en",
+  "description": ""
+}
